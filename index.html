@@ -3,403 +3,525 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>온라인 실습 강의 안내</title>
+<title>AI 챌린지 해 교육 안내</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #ffffff;
-    --bg2: #f7f7f5;
-    --bg3: #f0efea;
-    --text: #1a1a18;
-    --text2: #5a5a55;
-    --text3: #9a9990;
-    --border: rgba(0,0,0,0.08);
-    --border2: rgba(0,0,0,0.13);
-    --init-bg: #e8f5ee;
-    --init-text: #0e6644;
-    --init-border: #7ecba4;
-    --mid-bg: #eeedf8;
-    --mid-text: #3c348a;
-    --mid-border: #9490d8;
-    --adv-bg: #faebe6;
-    --adv-text: #7a3018;
-    --adv-border: #e08060;
-    --radius: 10px;
-    --radius-sm: 6px;
+    --bg:#fff; --bg2:#f7f7f5; --bg3:#efefeb;
+    --text:#1a1a18; --text2:#5a5a55; --text3:#9a9990;
+    --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.18);
+    --init-bg:#e8f5ee; --init-text:#0e6644; --init-border:#7ecba4;
+    --mid-bg:#eeedf8; --mid-text:#3c348a; --mid-border:#9490d8;
+    --adv-bg:#faebe6; --adv-text:#7a3018; --adv-border:#e08060;
+    --online-bg:#e6f2fb; --online-text:#174f82; --online-border:#82b8e8;
+    --offline-bg:#f0f8e8; --offline-text:#2d5a10; --offline-border:#90c860;
+    --vod-bg:#f5f0fa; --vod-text:#5a2d82; --vod-border:#c090e0;
+    --r:10px; --r-sm:6px;
   }
+  body { font-family:'Pretendard',-apple-system,sans-serif; background:var(--bg); color:var(--text); font-size:14px; line-height:1.6; padding:32px 24px 56px; max-width:800px; margin:0 auto; }
 
-  body {
-    font-family: 'Pretendard', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.6;
-    padding: 32px 24px 48px;
-    max-width: 780px;
-    margin: 0 auto;
-  }
+  /* header */
 
-  .page-header { margin-bottom: 28px; }
-  .page-title { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 6px; }
-  .page-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .meta-chip {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 12px; font-weight: 500;
-    background: var(--bg2); color: var(--text2);
-    border: 0.5px solid var(--border2);
-    border-radius: 999px; padding: 4px 10px;
-  }
+  .page-title { font-size:22px; font-weight:600; letter-spacing:-0.3px; margin-bottom:20px; }
 
-  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
-  .filter-btn {
-    font-size: 12px; font-weight: 500;
-    padding: 5px 14px; border-radius: 999px;
-    border: 1px solid var(--border2);
-    background: var(--bg); color: var(--text2);
-    cursor: pointer; transition: all 0.15s;
-    font-family: inherit;
-  }
-  .filter-btn:hover { background: var(--bg2); }
-  .filter-btn.on-all  { background: var(--text); color: var(--bg); border-color: var(--text); }
-  .filter-btn.on-init { background: var(--init-bg); color: var(--init-text); border-color: var(--init-border); }
-  .filter-btn.on-mid  { background: var(--mid-bg);  color: var(--mid-text);  border-color: var(--mid-border); }
-  .filter-btn.on-adv  { background: var(--adv-bg);  color: var(--adv-text);  border-color: var(--adv-border); }
+  /* notice box */
+  .notice { background:var(--bg2); border-radius:var(--r); padding:14px 18px; font-size:12px; color:var(--text2); line-height:1.75; border:0.5px solid var(--border2); margin-bottom:24px; }
+  .notice strong { color:var(--text); font-weight:600; }
 
-  .card-list { display: flex; flex-direction: column; gap: 10px; }
+  /* meta */
+  .meta-row { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:24px; }
+  .chip { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:500; background:var(--bg2); color:var(--text2); border:0.5px solid var(--border2); border-radius:999px; padding:4px 10px; }
 
-  .card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .card:hover { border-color: var(--border2); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-  .card.hidden { display: none; }
+  /* filters */
+  .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+  .fb { font-size:12px; font-weight:500; padding:5px 14px; border-radius:999px; border:1px solid var(--border2); background:var(--bg); color:var(--text2); cursor:pointer; font-family:inherit; transition:all 0.12s; }
+  .fb:hover { background:var(--bg2); }
+  .fb.on         { background:var(--text);        color:var(--bg);           border-color:var(--text); }
+  .fb.on-online  { background:var(--online-bg);   color:var(--online-text);  border-color:var(--online-border); }
+  .fb.on-offline { background:var(--offline-bg);  color:var(--offline-text); border-color:var(--offline-border); }
+  .fb.on-vod     { background:var(--vod-bg);      color:var(--vod-text);     border-color:var(--vod-border); }
 
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-  .card-title-wrap { flex: 1; }
-  .card-no { font-size: 11px; color: var(--text3); margin-bottom: 3px; }
-  .card-title { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; line-height: 1.4; margin-bottom: 3px; }
-  .card-lecturer { font-size: 12px; color: var(--text2); }
+  /* card */
+  .card-list { display:flex; flex-direction:column; gap:8px; }
+  .card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; transition:border-color 0.15s; }
+  .card:hover { border-color:var(--border2); }
+  .card.hidden { display:none; }
+  .card.open { border-color:var(--border2); }
 
-  .level-pill {
-    font-size: 11px; font-weight: 600;
-    padding: 3px 10px; border-radius: 999px;
-    white-space: nowrap; flex-shrink: 0;
-    border: 1px solid transparent;
-  }
-  .pill-init { background: var(--init-bg); color: var(--init-text); border-color: var(--init-border); }
-  .pill-mid  { background: var(--mid-bg);  color: var(--mid-text);  border-color: var(--mid-border); }
-  .pill-adv  { background: var(--adv-bg);  color: var(--adv-text);  border-color: var(--adv-border); }
+  /* summary */
+  .card-summary { display:flex; align-items:flex-start; gap:14px; padding:14px 18px; }
+  .card.open .card-summary { background:var(--bg2); }
 
-  .card-schedule {
-    display: flex; flex-wrap: wrap; gap: 12px;
-    margin-bottom: 10px;
-    font-size: 12px; color: var(--text2);
-  }
-  .card-schedule span { display: flex; align-items: center; gap: 4px; }
+  .cs-left { flex:1; min-width:0; cursor:pointer; }
+  .cs-title { font-size:14px; font-weight:600; letter-spacing:-0.2px; line-height:1.35; margin-bottom:3px; }
+  .cs-lecturer { font-size:12px; color:var(--text2); margin-bottom:5px; }
+  .cs-meta { display:flex; flex-wrap:wrap; gap:10px; font-size:12px; color:var(--text2); margin-bottom:5px; }
+  .cs-meta span { display:flex; align-items:center; gap:3px; }
+  .cs-deadline { font-size:13px; color:var(--text3); margin-top:6px; }
+  .cs-deadline.closed { color:#c0392b; font-weight:600; }
 
-  .card-desc { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 10px; }
+  .cs-right { display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0; padding-top:2px; }
+  .level-pill { font-size:11px; font-weight:600; padding:3px 9px; border-radius:999px; border:1px solid transparent; white-space:nowrap; }
+  .pill-init { background:var(--init-bg); color:var(--init-text); border-color:var(--init-border); }
+  .pill-mid  { background:var(--mid-bg);  color:var(--mid-text);  border-color:var(--mid-border); }
+  .pill-adv  { background:var(--adv-bg);  color:var(--adv-text);  border-color:var(--adv-border); }
 
-  .card-points { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
-  .card-point { font-size: 12px; color: var(--text2); padding-left: 12px; position: relative; line-height: 1.55; }
-  .card-point::before { content: "·"; position: absolute; left: 3px; color: var(--text3); }
+  .btn-apply { font-size:12px; font-weight:600; padding:6px 16px; border-radius:var(--r-sm); background:var(--text); color:var(--bg); border:none; cursor:pointer; font-family:inherit; white-space:nowrap; transition:opacity 0.15s; text-decoration:none; display:inline-block; }
+  .btn-apply:hover { opacity:0.75; }
+  .btn-apply.disabled { background:var(--bg3); color:var(--text3); cursor:default; pointer-events:none; }
 
-  .card-tools { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
-  .tool-tag {
-    font-size: 11px; padding: 3px 8px;
-    border-radius: var(--radius-sm);
-    background: var(--bg2); color: var(--text2);
-    border: 0.5px solid var(--border2);
-  }
+  /* toggle — 제목 아래 작은 링크처럼, cs-left와 분리 */
+  .toggle-hint { font-size:13px; color:var(--text3); display:flex; align-items:center; gap:3px; cursor:pointer; background:none; border:none; font-family:inherit; padding:0; margin-top:10px; }
+  .toggle-hint:hover { color:var(--text2); }
+  .toggle-arrow { display:inline-block; transition:transform 0.2s; line-height:1; }
+  .card.open .toggle-arrow { transform:rotate(180deg); }
 
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding-top: 12px;
-    border-top: 0.5px solid var(--border);
-  }
-  .card-target { font-size: 11px; color: var(--text3); flex: 1; line-height: 1.5; }
+  /* detail */
+  .card-detail { display:none; border-top:1px solid var(--border2); padding:16px 18px 18px; }
+  .card.open .card-detail { display:block; }
+  .card-desc { font-size:13px; color:var(--text2); line-height:1.65; margin-bottom:12px; }
+  .detail-label { font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+  .card-points { display:flex; flex-direction:column; gap:3px; margin-bottom:14px; }
+  .card-point { font-size:12px; color:var(--text2); padding-left:12px; position:relative; line-height:1.55; }
+  .card-point::before { content:"·"; position:absolute; left:3px; color:var(--text3); }
+  .card-tools { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:14px; }
+  .tool-tag { font-size:11px; padding:3px 8px; border-radius:var(--r-sm); background:var(--bg2); color:var(--text2); border:0.5px solid var(--border2); }
+  .detail-footer { padding-top:12px; border-top:0.5px solid var(--border); }
+  .card-target { font-size:11px; color:var(--text3); line-height:1.5; }
 
-  .btn-apply {
-    font-size: 12px; font-weight: 600;
-    padding: 7px 18px; border-radius: var(--radius-sm);
-    background: var(--text); color: var(--bg);
-    border: none; cursor: pointer;
-    font-family: inherit; white-space: nowrap;
-    transition: opacity 0.15s;
-    text-decoration: none; display: inline-block;
-  }
-  .btn-apply:hover { opacity: 0.75; }
+  /* series */
+  .series-badge { display:inline-block; font-size:11px; font-weight:500; background:#fff8e6; color:#7a5010; border:0.5px solid #e8c870; border-radius:var(--r-sm); padding:2px 8px; margin-bottom:4px; }
+  .section-head { font-size:13px; font-weight:600; color:var(--text2); margin:24px 0 6px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+  .section-note { font-size:12px; color:var(--text3); margin-bottom:12px; line-height:1.6; }
 
-  .notice {
-    margin-top: 24px;
-    background: var(--bg2);
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    font-size: 12px; color: var(--text2); line-height: 1.7;
-    border: 0.5px solid var(--border);
-  }
-  .notice strong { color: var(--text); font-weight: 600; }
+  /* format pill */
+  .format-pill { font-size:11px; font-weight:500; padding:2px 8px; border-radius:999px; white-space:nowrap; }
+  .fp-online  { background:var(--online-bg);  color:var(--online-text); }
+  .fp-offline { background:var(--offline-bg); color:var(--offline-text); }
+  .fp-vod     { background:var(--vod-bg);     color:var(--vod-text); }
 
-  svg.ico { width: 13px; height: 13px; display: inline-block; vertical-align: -1px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  /* vod guide */
+  .vod-guide { background:var(--bg2); border:1px dashed var(--border2); border-radius:var(--r); padding:16px 20px; margin-top:8px; }
+  .vod-guide pre { font-size:11px; color:var(--text2); line-height:1.7; white-space:pre-wrap; font-family:monospace; }
 
-  @media (max-width: 480px) {
-    body { padding: 20px 16px 40px; }
-    .card-top { flex-wrap: wrap; }
-    .card-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .btn-apply { width: 100%; text-align: center; }
+  svg.ico { width:13px; height:13px; display:inline-block; vertical-align:-1px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  @media(max-width:520px){
+    body { padding:20px 14px 40px; }
+    .cs-meta { gap:7px; }
   }
 </style>
 </head>
 <body>
 
-<div class="page-header">
-  <p class="page-title">온라인 실습 강의</p>
-  <div class="page-meta">
-    <span class="meta-chip">
-      <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      교육 기간 6/28 – 7/24
-    </span>
-    <span class="meta-chip">
-      <svg class="ico" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-      온라인 실시간 + VOD
-    </span>
-    <span class="meta-chip">
-      <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      회당 2시간
-    </span>
-  </div>
+<h1 class="page-title">&lt;AI 챌린지 해&gt; 교육 안내</h1>
+
+<div class="notice">
+  <strong>신청 안내</strong><br>
+  강의별로 신청을 별도로 받으며 중복 수강이 가능합니다. 신청 마감 이후에는 신청할 수 없으며, 온라인 실시간 강의는 녹화본(VOD)이 추후 제공됩니다. 문의사항은 담당자에게 연락해 주세요.
 </div>
+
 
 <div class="filter-row">
-  <button class="filter-btn on-all" data-filter="all">전체</button>
-  <button class="filter-btn" data-filter="init">초급</button>
-  <button class="filter-btn" data-filter="mid">중급</button>
-  <button class="filter-btn" data-filter="adv">고급</button>
+  <button class="fb on" data-filter="all">전체</button>
+  <button class="fb" data-filter="online">온라인 실시간</button>
+  <button class="fb" data-filter="offline">오프라인 실시간</button>
+  <button class="fb" data-filter="vod">VOD</button>
 </div>
 
-<div class="card-list">
+<div class="card-list" id="card-list">
 
-  <!-- 강의 1 -->
-  <div class="card" data-level="init">
-    <div class="card-top">
-      <div class="card-title-wrap">
-        <p class="card-no">강의 ①</p>
-        <p class="card-title">AI 활용 가이드 제작하기</p>
-        <p class="card-lecturer">황홍기</p>
+<!-- ① -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <p class="cs-title">우리 기관에 꼭 필요한 AI 윤리·보안 가이드 작성법</p>
+      <p class="cs-lecturer">황홍기</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/3 (목)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오전 10–12시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
       </div>
+      <p class="cs-deadline" data-date="2026-06-26">신청 마감 6/26 (목)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
+    </div>
+    <div class="cs-right">
       <span class="level-pill pill-init">초급</span>
-    </div>
-    <div class="card-schedule">
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/3 (목)</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오전 10시–12시</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> 온라인 실시간</span>
-    </div>
-    <p class="card-desc">AI 솔루션을 만들 때 놓치기 쉬운 개인정보·보안 실수를 사례로 먼저 살펴보고, 우리 기관에 맞는 AI 활용 가이드라인 초안을 직접 작성합니다.</p>
-    <div class="card-points">
-      <p class="card-point">비영리 현장에서 AI 가이드라인이 필요한 이유</p>
-      <p class="card-point">발생할 수 있는 문제 사례 3가지와 올바른 대응법</p>
-      <p class="card-point">이용자 개인정보를 어떻게 다뤄야 할지 핵심 원칙</p>
-      <p class="card-point">AI 도구로 우리 솔루션 맞춤 가이드라인 초안 작성</p>
-    </div>
-    <div class="card-tools">
-      <span class="tool-tag">Claude</span>
-      <span class="tool-tag">무료 AI 도구</span>
-    </div>
-    <div class="card-footer">
-      <p class="card-target">AI 솔루션을 개발 중이거나 막 시작할 분 · AI 활용 기준을 만들고 싶은 단체</p>
       <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
     </div>
   </div>
+  <div class="card-detail">
+    <p class="card-desc">AI 솔루션을 만들 때 놓치기 쉬운 개인정보·보안 실수를 사례로 먼저 살펴봅니다. 강의가 끝날 때는 우리 단체 맞춤형 AI 활용 가이드라인 초안을 손에 쥐고 나갑니다.</p>
+    <p class="detail-label">강의 내용</p>
+    <div class="card-points">
+      <p class="card-point">비영리 현장에서 AI 가이드라인이 필요한 이유</p>
+      <p class="card-point">실제 벌어질 수 있는 문제 사례 3가지와 올바른 대응법</p>
+      <p class="card-point">기획→개발→배포→운영 단계별로 챙겨야 할 핵심 원칙</p>
+      <p class="card-point">AI 도구로 우리 솔루션 맞춤 가이드라인 초안 직접 작성</p>
+    </div>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">Claude</span><span class="tool-tag">무료 AI 도구</span></div>
+    <div class="detail-footer"><p class="card-target">AI 솔루션을 개발 중이거나 막 시작할 분 · AI 활용 기준을 만들고 싶은 단체 · 이용자 개인정보 처리가 막막한 분</p></div>
+  </div>
+</div>
 
-  <!-- 강의 2 -->
-  <div class="card" data-level="init">
-    <div class="card-top">
-      <div class="card-title-wrap">
-        <p class="card-no">강의 ②</p>
-        <p class="card-title">업무 자동화 워크플로우 제작 (입문)</p>
-        <p class="card-lecturer">류강윤</p>
+<!-- ② -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <p class="cs-title">반복 업무는 이제 AI에게! 자동화 워크플로우 제작 (입문)</p>
+      <p class="cs-lecturer">류강윤</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/1 (화)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
       </div>
+      <p class="cs-deadline" data-date="2026-06-24">신청 마감 6/24 (화)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
+    </div>
+    <div class="cs-right">
       <span class="level-pill pill-init">초급</span>
+      <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
     </div>
-    <div class="card-schedule">
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/1 (화)</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> 온라인 실시간</span>
-    </div>
-    <p class="card-desc">코드 없이 Zapier와 Google Workspace를 연결해 반복 업무를 자동화하는 나만의 시스템을 2시간 만에 만들어봅니다.</p>
+  </div>
+  <div class="card-detail">
+    <p class="card-desc">코드 한 줄 없이, Zapier와 Google Workspace를 연결해 반복 업무를 없애는 나만의 자동화 시스템을 직접 만들어봅니다. 확인서 자동 발급부터 점심 메뉴 추천 봇까지, 2시간이면 충분합니다.</p>
+    <p class="detail-label">강의 내용</p>
     <div class="card-points">
       <p class="card-point">업무자동화 개념 및 도구 소개</p>
       <p class="card-point">확인서 자동 발급 시스템 구축</p>
       <p class="card-point">점심메뉴 추천 봇 만들기</p>
       <p class="card-point">Zapier 스케줄·포맷터 기능 활용</p>
     </div>
-    <div class="card-tools">
-      <span class="tool-tag">Zapier</span>
-      <span class="tool-tag">Google Forms</span>
-      <span class="tool-tag">Sheets/Docs</span>
-      <span class="tool-tag">Gemini</span>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">Zapier</span><span class="tool-tag">Google Forms</span><span class="tool-tag">Sheets/Docs</span><span class="tool-tag">Gemini</span></div>
+    <div class="detail-footer"><p class="card-target">확인서 발급·안내 메일 등 반복 행정 업무가 많은 분 · 자동화가 뭔지는 알지만 어디서 시작해야 할지 모르는 분</p></div>
+  </div>
+</div>
+
+<!-- ③ -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <p class="cs-title">반복 업무는 이제 AI에게! 자동화 워크플로우 제작 (고급)</p>
+      <p class="cs-lecturer">류강윤</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/7 (월)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
+      </div>
+      <p class="cs-deadline" data-date="2026-06-30">신청 마감 6/30 (월)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
     </div>
-    <div class="card-footer">
-      <p class="card-target">확인서 발급·안내 메일 등 반복 행정 업무가 많은 분 · 코딩 없이 디지털 도구를 업무에 활용해보고 싶은 분</p>
+    <div class="cs-right">
+      <span class="level-pill pill-adv">고급</span>
       <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
     </div>
   </div>
-
-  <!-- 강의 3 -->
-  <div class="card" data-level="adv">
-    <div class="card-top">
-      <div class="card-title-wrap">
-        <p class="card-no">강의 ③</p>
-        <p class="card-title">업무 자동화 워크플로우 제작 (고급)</p>
-        <p class="card-lecturer">류강윤</p>
-      </div>
-      <span class="level-pill pill-adv">고급</span>
-    </div>
-    <div class="card-schedule">
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/7 (월)</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> 온라인 실시간</span>
-    </div>
-    <p class="card-desc">자동화 흐름 안에 AI를 직접 심어봅니다. 지원서가 접수되면 AI가 1차로 검토하고, 원하는 웹사이트 데이터를 매일 자동 수집·정제하는 시스템을 구축합니다.</p>
+  <div class="card-detail">
+    <p class="card-desc">자동화 흐름 안에 AI를 직접 심어봅니다. 지원서가 접수되면 AI가 1차로 검토하고, 원하는 웹사이트 데이터를 매일 자동으로 수집·정제하는 시스템을 2시간 안에 구축합니다.</p>
+    <p class="detail-label">강의 내용</p>
     <div class="card-points">
       <p class="card-point">Make가 Zapier와 어떻게 다른지, AI Agent란 무엇인지</p>
       <p class="card-point">지원서 접수 → AI 1차 검토 → 결과 자동 저장까지 한 번에 처리하는 워크플로우 구축</p>
       <p class="card-point">뉴스·공고 등 원하는 웹사이트 데이터를 매일 자동 수집하고 AI로 핵심만 골라내기</p>
     </div>
-    <div class="card-tools">
-      <span class="tool-tag">Make</span>
-      <span class="tool-tag">Gemini</span>
-      <span class="tool-tag">HTTP/RSS</span>
-      <span class="tool-tag">Sheets/Notion</span>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">Make</span><span class="tool-tag">Gemini</span><span class="tool-tag">HTTP/RSS</span><span class="tool-tag">Sheets/Notion</span></div>
+    <div class="detail-footer"><p class="card-target">입문 과정을 수료했거나 Zapier를 써본 경험이 있는 분 · AI가 판단하는 자동화 시스템을 직접 설계해보고 싶은 분</p></div>
+  </div>
+</div>
+
+<!-- ④ -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <p class="cs-title">바이브 코딩으로 하루 만에 뚝딱 만드는 웹페이지 (입문)</p>
+      <p class="cs-lecturer">이보라</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/2 (수)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
+      </div>
+      <p class="cs-deadline" data-date="2026-06-25">신청 마감 6/25 (수)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
     </div>
-    <div class="card-footer">
-      <p class="card-target">입문 과정을 수료했거나 Zapier를 써본 경험이 있는 분 · AI가 판단하는 자동화 시스템을 직접 설계해보고 싶은 분</p>
+    <div class="cs-right">
+      <span class="level-pill pill-mid">중급</span>
       <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
     </div>
   </div>
-
-  <!-- 강의 4 -->
-  <div class="card" data-level="mid">
-    <div class="card-top">
-      <div class="card-title-wrap">
-        <p class="card-no">강의 ④</p>
-        <p class="card-title">바이브 코딩으로 하루 만에 뚝딱 만드는 웹페이지 (입문)</p>
-        <p class="card-lecturer">이보라</p>
-      </div>
-      <span class="level-pill pill-mid">중급</span>
-    </div>
-    <div class="card-schedule">
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/2 (수)</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> 온라인 실시간</span>
-    </div>
-    <p class="card-desc">코딩을 전혀 몰라도 됩니다. AI에게 말하듯 지시해서 신청·후원 회원 서비스를 오늘 완성합니다. 데이터베이스, 로그인, 자동 안내 메일까지 한 번에 구현합니다.</p>
+  <div class="card-detail">
+    <p class="card-desc">코딩을 전혀 몰라도 됩니다. AI에게 말하듯 지시해서 바로 쓸 수 있는 신청·후원 웹서비스를 오늘 완성합니다. 데이터베이스, 로그인, 자동 안내 메일까지 한 번에 완성합니다.</p>
+    <p class="detail-label">강의 내용</p>
     <div class="card-points">
       <p class="card-point">바이브코딩 개념 및 Lovable 소개</p>
       <p class="card-point">후원·회원 신청 페이지 생성 및 신청자 명단 데이터 자동 저장</p>
       <p class="card-point">일반 신청자와 담당자가 나누는 로그인·보안 설정</p>
       <p class="card-point">자동 안내 메일 발송 구현</p>
     </div>
-    <div class="card-tools">
-      <span class="tool-tag">Lovable</span>
-      <span class="tool-tag">Supabase</span>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">Lovable</span><span class="tool-tag">Supabase</span></div>
+    <div class="detail-footer"><p class="card-target">코딩을 전혀 모르지만 우리 단체 웹서비스를 직접 만들어보고 싶은 분 · AI 솔루션 개발에 관심은 있지만 기술이 막막했던 분</p></div>
+  </div>
+</div>
+
+<!-- ⑤ -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <p class="cs-title">바이브 코딩으로 하루 만에 뚝딱 만드는 웹페이지 (고급)</p>
+      <p class="cs-lecturer">이보라</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/8 (화)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
+      </div>
+      <p class="cs-deadline" data-date="2026-07-01">신청 마감 7/1 (화)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
     </div>
-    <div class="card-footer">
-      <p class="card-target">코딩을 전혀 모르지만 우리 단체 웹서비스를 직접 만들어보고 싶은 분 · AI 솔루션 개발에 관심은 있지만 기술이 막막했던 분</p>
+    <div class="cs-right">
+      <span class="level-pill pill-adv">고급</span>
       <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
     </div>
   </div>
-
-  <!-- 강의 5 -->
-  <div class="card" data-level="adv">
-    <div class="card-top">
-      <div class="card-title-wrap">
-        <p class="card-no">강의 ⑤</p>
-        <p class="card-title">바이브 코딩으로 하루 만에 뚝딱 만드는 웹페이지 (고급)</p>
-        <p class="card-lecturer">이보라</p>
-      </div>
-      <span class="level-pill pill-adv">고급</span>
-    </div>
-    <div class="card-schedule">
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/8 (화)</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> 온라인 실시간</span>
-    </div>
-    <p class="card-desc">입문에서 만든 웹 서비스를 제대로 고도화합니다. Claude Code와 Lovable MCP를 연결해 크레딧을 아끼면서 검색·필터·통계 기능을 직접 붙이는 법을 배웁니다.</p>
+  <div class="card-detail">
+    <p class="card-desc">입문에서 만든 웹 서비스, 이제 제대로 고도화합니다. Claude Code와 Lovable MCP를 연결해 크레딧을 아끼면서 검색·필터·통계 기능을 직접 붙이는 법을 배웁니다.</p>
+    <p class="detail-label">강의 내용</p>
     <div class="card-points">
       <p class="card-point">Lovable과 Claude Code를 어떻게 나눠 쓰면 비용을 아낄 수 있는지</p>
       <p class="card-point">입문 결과물을 GitHub로 가져와 Claude Code에서 이어 작업하기</p>
       <p class="card-point">Lovable MCP·GitHub MCP 연결</p>
       <p class="card-point">검색·필터·통계 대시보드 등 고급 기능 추가 및 Git으로 변경 관리·디버깅</p>
     </div>
-    <div class="card-tools">
-      <span class="tool-tag">Claude Code</span>
-      <span class="tool-tag">Lovable MCP</span>
-      <span class="tool-tag">GitHub MCP</span>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">Claude Code</span><span class="tool-tag">Lovable MCP</span><span class="tool-tag">GitHub MCP</span></div>
+    <div class="detail-footer"><p class="card-target">입문 과정을 수료하거나 서비스를 더 발전시키고 싶은 분 · Lovable 크레딧 소진이 부담스러워 비용을 줄이고 싶은 분</p></div>
+  </div>
+</div>
+
+<!-- ⑥ -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <p class="cs-title">바이브 코딩으로 만든 웹페이지 외부에 공개하기</p>
+      <p class="cs-lecturer">이보라</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/16 (수)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
+      </div>
+      <p class="cs-deadline" data-date="2026-07-09">신청 마감 7/9 (수)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
     </div>
-    <div class="card-footer">
-      <p class="card-target">입문 과정을 수료하거나 서비스를 더 발전시키고 싶은 분 · Lovable 크레딧 소진이 부담스러워 비용을 줄이고 싶은 분</p>
+    <div class="cs-right">
+      <span class="level-pill pill-adv">고급</span>
       <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
     </div>
   </div>
-
-  <!-- 강의 6 -->
-  <div class="card" data-level="adv">
-    <div class="card-top">
-      <div class="card-title-wrap">
-        <p class="card-no">강의 ⑥</p>
-        <p class="card-title">바이브 코딩으로 만든 웹페이지 외부에 공개하기</p>
-        <p class="card-lecturer">이보라</p>
-      </div>
-      <span class="level-pill pill-adv">고급</span>
-    </div>
-    <div class="card-schedule">
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/16 (수)</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
-      <span><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> 온라인 실시간</span>
-    </div>
+  <div class="card-detail">
     <p class="card-desc">직접 만든 웹앱에 우리 단체 도메인을 붙이고 세상에 공개합니다. 누가 어떻게 쓰는지 데이터로 확인하고, 문제가 생기면 바로 알아채는 운영 루틴까지 갖춥니다.</p>
+    <p class="detail-label">강의 내용</p>
     <div class="card-points">
       <p class="card-point">배포 개념 및 커스텀 도메인 연결</p>
       <p class="card-point">GA4 태그 매니저로 방문자 분석</p>
       <p class="card-point">에러 모니터링 설정 및 장애 대응</p>
       <p class="card-point">현장 인수인계·확산 문서화</p>
     </div>
-    <div class="card-tools">
-      <span class="tool-tag">Lovable</span>
-      <span class="tool-tag">Claude Code</span>
-      <span class="tool-tag">DNS</span>
-      <span class="tool-tag">GA4</span>
-      <span class="tool-tag">Clarity</span>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">Lovable</span><span class="tool-tag">Claude Code</span><span class="tool-tag">DNS</span><span class="tool-tag">GA4</span><span class="tool-tag">Clarity</span></div>
+    <div class="detail-footer"><p class="card-target">만들어둔 웹 서비스를 실제 서비스로 공개하고 싶은 분 · 오류 없이 안정적으로 운영하고 현장에 확산시키고 싶은 분</p></div>
+  </div>
+</div>
+
+<!-- 시리즈 섹션 헤더 — data-section으로 필터 제어 -->
+<p class="section-head" data-section="online">시리즈 강의 — 현장 문제 정의부터 해결 방안까지 한 번에 정리하는 AI 솔루션 기획</p>
+<p class="section-note" data-section="online">총 3회 · VOD 수강 후 Live 피드백 · 사전 산출물 제출 필요<br>※ Live 피드백은 강의 없이 본인이 채워온 산출물을 첨석 받는 자리입니다. 사전에 VOD를 수강하고 산출물을 완성한 참가자에 한해 참여할 수 있습니다.</p>
+
+<!-- ⑦ -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <span class="series-badge">시리즈 Step 1</span>
+      <p class="cs-title">내가 정의한 문제, 진짜 문제일까?</p>
+      <p class="cs-lecturer">진지한컴퍼니</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/9 (수)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
+      </div>
+      <p class="cs-deadline" data-date="2026-07-02">신청 마감 7/2 (수)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
     </div>
-    <div class="card-footer">
-      <p class="card-target">만들어둔 웹 서비스를 실제 서비스로 공개하고 싶은 분 · 오류 없이 안정적으로 운영하고 현장에 확산시키고 싶은 분</p>
+    <div class="cs-right">
+      <span class="level-pill pill-init">초급</span>
       <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
     </div>
   </div>
-
+  <div class="card-detail">
+    <p class="card-desc">지금 생각하고 있는 문제가 정말 풀 만한 문제일까요? 내가 정의한 실제 문제에 대해 강사의 피드백을 받습니다. 혼자 고민할 때는 보이지 않던 것들이 보이기 시작합니다.</p>
+    <p class="detail-label">강의 내용</p>
+    <div class="card-points">
+      <p class="card-point">내가 정의한 현장 문제를 발표하고 참가자들과 공유</p>
+      <p class="card-point">서비스로 만들만한 가치가 있는 문제인지를 기준으로 강사·참가자 상호 피드백</p>
+      <p class="card-point">피드백 반영해 현장에서 즉시 수정</p>
+    </div>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">클로드</span><span class="tool-tag">문제정의 템플릿</span></div>
+    <div class="detail-footer"><p class="card-target">내가 고른 문제가 좋은 문제인지 확인하고 싶은 분 · 문제정의 방향이 맞는지 전문가 피드백이 필요한 분</p></div>
+  </div>
 </div>
 
-<div class="notice">
-  <strong>수강 안내</strong><br>
-  모든 강의는 온라인 실시간으로 진행되며 녹화본(VOD)이 추후 제공됩니다. 강의별로 신청을 별도로 받으며 중복 수강이 가능합니다. 문의사항은 담당자에게 연락해 주세요.
+<!-- ⑧ -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <span class="series-badge">시리즈 Step 2</span>
+      <p class="cs-title">정의한 문제를 어떤 AI 서비스로 해결할 수 있을까?</p>
+      <p class="cs-lecturer">진지한컴퍼니</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/16 (수)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
+      </div>
+      <p class="cs-deadline" data-date="2026-07-09">신청 마감 7/9 (수)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
+    </div>
+    <div class="cs-right">
+      <span class="level-pill pill-init">초급</span>
+      <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
+    </div>
+  </div>
+  <div class="card-detail">
+    <p class="card-desc">내가 정의한 문제를 가장 잘 해결하는 AI 서비스는 무엇일까요? AI 개입 지점부터 사용 시나리오까지 강사의 실전 피드백을 받습니다. 어떤 AI 서비스를 만들면 좋을지 콘셉트가 나옵니다.</p>
+    <p class="detail-label">강의 내용</p>
+    <div class="card-points">
+      <p class="card-point">참가자가 구상한 AI 서비스 아이디어 발표 및 공유</p>
+      <p class="card-point">사용 시나리오, AI 개입 지점, AI 서비스 콘셉트 적절성에 대한 강사 피드백</p>
+      <p class="card-point">피드백 반영해 AI 서비스 수정</p>
+    </div>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">클로드</span><span class="tool-tag">콘셉트 시트 템플릿</span></div>
+    <div class="detail-footer"><p class="card-target">서비스 아이디어는 있는데 현실적인지 확신이 없는 분 · AI를 어디에 어떻게 쓸지 감이 잡히지 않는 분</p></div>
+  </div>
 </div>
+
+<!-- ⑨ -->
+<div class="card" data-format="online">
+  <div class="card-summary">
+    <div class="cs-left" onclick="toggleCard(this)">
+      <span class="series-badge">시리즈 Step 3</span>
+      <p class="cs-title">내가 기획한 AI 서비스에 한 끗의 완성도 더하기</p>
+      <p class="cs-lecturer">진지한컴퍼니</p>
+      <div class="cs-meta">
+        <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 7/23 (수)</span>
+        <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 오후 7–9시</span>
+        <span class="format-pill fp-online">온라인 실시간</span>
+      </div>
+      <p class="cs-deadline" data-date="2026-07-16">신청 마감 7/16 (수)</p>
+      <button class="toggle-hint" onclick="toggleFromBtn(event,this)">상세보기 <span class="toggle-arrow">▾</span></button>
+    </div>
+    <div class="cs-right">
+      <span class="level-pill pill-init">초급</span>
+      <a href="링크를_여기에_입력" class="btn-apply">신청하기</a>
+    </div>
+  </div>
+  <div class="card-detail">
+    <p class="card-desc">내가 정의한 문제와 설계한 AI 서비스를 &lt;AI 챌린지 해&gt;에서 성공할 수 있는 안으로 만듭니다. 이 강의를 거치면 예선 제출물이 훨씬 더 탄탄해집니다.</p>
+    <p class="detail-label">강의 내용</p>
+    <div class="card-points">
+      <p class="card-point">참가자의 AI 서비스 기획안 공유 및 발표</p>
+      <p class="card-point">MVP(최소 기능 제품)·검증 계획·리스크 점검 항목에 대한 종합 피드백</p>
+      <p class="card-point">피드백 반영해 예선 제출물 최종 완성</p>
+    </div>
+    <p class="detail-label">사용 도구</p>
+    <div class="card-tools"><span class="tool-tag">클로드</span><span class="tool-tag">MVP 캔버스</span><span class="tool-tag">리스크 체크리스트</span></div>
+    <div class="detail-footer"><p class="card-target">AI 솔루션을 더 탄탄하게 만들고 싶은 분 · MVP 범위와 검증 계획이 현실적인지 점검받고 싶은 분</p></div>
+  </div>
+</div>
+
+<!-- VOD 섹션 헤더 -->
+<p class="section-head" data-section="vod">VOD 강의</p>
+<div class="vod-guide" data-format="vod">
+  <p style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:8px;">📌 VOD 강의 추가 가이드 (운영자용)</p>
+  <p style="font-size:12px;color:var(--text2);margin-bottom:10px;">아래 블록을 복사해 이 안내문 바로 위에 붙여넣고 내용을 채운 뒤, 이 가이드 박스는 삭제해 주세요.</p>
+  <pre>
+&lt;div class="card" data-format="vod"&gt;
+  &lt;div class="card-summary"&gt;
+    &lt;div class="cs-left" onclick="toggleCard(this)"&gt;
+      &lt;p class="cs-title"&gt;강의 제목&lt;/p&gt;
+      &lt;p class="cs-lecturer"&gt;강사 이름&lt;/p&gt;
+      &lt;div class="cs-meta"&gt;
+        &lt;span&gt;소요 시간&lt;/span&gt;
+        &lt;span class="format-pill fp-vod"&gt;VOD&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;button class="toggle-hint" onclick="toggleCard(this)"&gt;상세보기 &lt;span class="toggle-arrow"&gt;▾&lt;/span&gt;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="cs-right"&gt;
+      &lt;span class="level-pill pill-init"&gt;초급&lt;/span&gt;
+      &lt;a href="링크" class="btn-apply"&gt;수강하기&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="card-detail"&gt;
+    &lt;p class="card-desc"&gt;강의 설명&lt;/p&gt;
+    &lt;p class="detail-label"&gt;강의 내용&lt;/p&gt;
+    &lt;div class="card-points"&gt;&lt;p class="card-point"&gt;항목&lt;/p&gt;&lt;/div&gt;
+    &lt;p class="detail-label"&gt;사용 도구&lt;/p&gt;
+    &lt;div class="card-tools"&gt;&lt;span class="tool-tag"&gt;도구명&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="detail-footer"&gt;&lt;p class="card-target"&gt;추천 대상&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+</div><!-- end card-list -->
 
 <script>
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  function toggleCard(el) {
+    el.closest('.card').classList.toggle('open');
+  }
+  function toggleFromBtn(e, el) {
+    e.stopPropagation();
+    el.closest('.card').classList.toggle('open');
+  }
+
+  // 마감일 자동 체크
+  const today = new Date(); today.setHours(0,0,0,0);
+  document.querySelectorAll('.cs-deadline[data-date]').forEach(el => {
+    if (today > new Date(el.dataset.date)) {
+      el.textContent = '신청 마감'; el.classList.add('closed');
+      const btn = el.closest('.card-summary').querySelector('.btn-apply');
+      if (btn) { btn.textContent = '마감'; btn.classList.add('disabled'); }
+    }
+  });
+
+  // 필터
+  document.querySelectorAll('.fb').forEach(btn => {
     btn.addEventListener('click', function() {
-      const filter = this.dataset.filter;
-      document.querySelectorAll('.filter-btn').forEach(b => {
-        b.classList.remove('on-all','on-init','on-mid','on-adv');
-      });
-      this.classList.add('on-' + filter);
-      document.querySelectorAll('.card').forEach(card => {
-        card.classList.toggle('hidden', filter !== 'all' && card.dataset.level !== filter);
+      const f = this.dataset.filter;
+      document.querySelectorAll('.fb').forEach(b => b.className = 'fb');
+      this.classList.add(f === 'all' ? 'on' : 'on-' + f);
+
+      document.querySelectorAll('#card-list > *').forEach(el => {
+        if (f === 'all') { el.style.display = ''; return; }
+        // 카드
+        if (el.classList.contains('card')) {
+          el.style.display = el.dataset.format === f ? '' : 'none';
+          return;
+        }
+        // 섹션 헤더·노트 (data-section 기준)
+        if (el.dataset.section) {
+          el.style.display = el.dataset.section === f ? '' : 'none';
+          return;
+        }
+        // vod-guide (data-format="vod")
+        if (el.dataset.format) {
+          el.style.display = el.dataset.format === f ? '' : 'none';
+          return;
+        }
+        // 그 외 요소는 숨김
+        el.style.display = 'none';
       });
     });
   });
